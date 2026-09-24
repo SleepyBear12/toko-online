@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="id">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Ruang Rasa | Daftar Produk</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--ink: #23312b;
+			--muted: #718078;
+			--cream: #f7f5ef;
+			--paper: #fffdf8;
+			--line: #e7e4da;
+			--green: #245b4a;
+			--lime: #d6e77d;
+			--orange: #e8814a;
+			--shadow: 0 16px 40px rgba(38, 59, 48, .08);
+		}
+
+		* { box-sizing: border-box; }
+		body { margin: 0; color: var(--ink); background: var(--cream); font-family: "DM Sans", sans-serif; }
+		button, input { font: inherit; }
+		button { cursor: pointer; }
+		.wrap { width: min(1180px, calc(100% - 40px)); margin: auto; }
+
+		header { background: var(--paper); border-bottom: 1px solid var(--line); }
+		.nav { min-height: 80px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+		.brand { display: flex; align-items: center; gap: 11px; color: var(--ink); text-decoration: none; font-weight: 700; letter-spacing: -.03em; }
+		.brand-mark { width: 35px; height: 35px; display: grid; place-items: center; color: var(--green); border: 2px solid var(--green); border-radius: 50%; font-size: 18px; }
+		.brand strong { font-size: 17px; }
+		.brand span { color: var(--orange); }
+		.nav-links { display: flex; gap: 30px; color: var(--muted); font-size: 14px; }
+		.nav-links a { color: inherit; text-decoration: none; }
+		.nav-links a:first-child { color: var(--green); font-weight: 700; }
+		.nav-actions { display: flex; gap: 12px; align-items: center; }
+		.icon-button { position: relative; width: 42px; height: 42px; border: 1px solid var(--line); border-radius: 50%; background: transparent; color: var(--ink); font-size: 18px; }
+		.cart-count { position: absolute; top: -3px; right: -2px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 10px; background: var(--orange); color: white; font-size: 10px; font-weight: 700; }
+		.avatar { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: #ead6c2; font-size: 14px; font-weight: 700; }
+
+		.intro { display: flex; justify-content: space-between; align-items: end; gap: 24px; padding: 55px 0 35px; }
+		.eyebrow { margin: 0 0 12px; color: var(--orange); font-size: 12px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+		h1 { max-width: 550px; margin: 0; font-family: "Playfair Display", serif; font-size: clamp(38px, 5vw, 62px); line-height: 1.04; letter-spacing: -.045em; font-weight: 700; }
+		.intro-copy { max-width: 290px; margin: 0 0 5px; color: var(--muted); font-size: 14px; line-height: 1.65; }
+
+		.toolbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 18px; margin-bottom: 30px; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
+		.categories { display: flex; gap: 7px; flex-wrap: wrap; }
+		.category { border: 0; border-radius: 30px; padding: 10px 15px; background: transparent; color: var(--muted); font-size: 13px; }
+		.category.active, .category:hover { background: var(--green); color: white; }
+		.search { width: min(240px, 100%); display: flex; align-items: center; gap: 9px; padding: 9px 13px; border: 1px solid var(--line); border-radius: 9px; color: var(--muted); }
+		.search input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--ink); font-size: 13px; }
+
+		.product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding-bottom: 70px; }
+		.product-card { position: relative; overflow: hidden; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; transition: transform .2s ease, box-shadow .2s ease; }
+		.product-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+		.product-image { aspect-ratio: 1 / 1.05; display: grid; place-items: center; position: relative; overflow: hidden; }
+		.product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+		.product-card:hover img { transform: scale(1.04); }
+		.tag { position: absolute; top: 13px; left: 13px; padding: 6px 9px; border-radius: 5px; background: var(--lime); color: var(--green); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+		.heart { position: absolute; top: 10px; right: 10px; width: 33px; height: 33px; border: 0; border-radius: 50%; background: rgba(255,255,255,.86); color: var(--muted); font-size: 17px; }
+		.heart:hover { color: var(--orange); }
+		.product-info { padding: 16px 17px 17px; }
+		.product-meta { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; color: var(--muted); font-size: 11px; }
+		.rating { color: #c67a2c; }
+		.product-info h2 { margin: 0 0 12px; font-size: 16px; letter-spacing: -.02em; }
+		.bottom-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+		.price { font-size: 15px; font-weight: 700; }
+		.price small { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; font-weight: 400; }
+		.add-button { width: 34px; height: 34px; border: 0; border-radius: 9px; background: var(--green); color: white; font-size: 21px; line-height: 1; }
+		.add-button:hover { background: var(--orange); }
+		.empty { grid-column: 1 / -1; padding: 50px; color: var(--muted); text-align: center; }
+
+		@media (max-width: 850px) { .product-grid { grid-template-columns: repeat(2, 1fr); } .nav-links { display: none; } }
+		@media (max-width: 560px) { .wrap { width: min(100% - 28px, 420px); } .nav { min-height: 68px; } .intro { display: block; padding: 38px 0 25px; } .intro-copy { margin-top: 18px; } .toolbar { display: block; padding: 12px; } .search { width: 100%; margin-top: 13px; } .product-grid { gap: 12px; } .product-info { padding: 13px; } .product-info h2 { font-size: 14px; } .product-meta { display: block; line-height: 1.6; } .rating { float: right; } }
+	</style>
+</head>
+<body>
+	<header>
+		<nav class="nav wrap" aria-label="Navigasi utama">
+			<a class="brand" href="#"><span class="brand-mark">✦</span><strong>ruang<span>rasa</span></strong></a>
+			<div class="nav-links"><a href="#produk">Produk</a><a href="#tentang">Tentang kami</a><a href="#bantuan">Bantuan</a></div>
+			<div class="nav-actions"><button class="icon-button" aria-label="Keranjang belanja">🛒<b class="cart-count" id="cartCount">0</b></button><div class="avatar" aria-label="Profil pengguna">AR</div></div>
+		</nav>
+	</header>
+
+	<main class="wrap" id="produk">
+		<section class="intro"><div><p class="eyebrow">Koleksi pilihan minggu ini</p><h1>Temukan hal kecil yang membuat hari lebih baik.</h1></div><p class="intro-copy">Produk penuh cerita, dipilih dengan perhatian untuk menemani ruang dan rutinitas kamu.</p></section>
+		<section class="toolbar" aria-label="Filter produk"><div class="categories"><button class="category active" data-category="Semua">Semua</button><button class="category" data-category="Rumah">Rumah</button><button class="category" data-category="Rasa">Rasa</button><button class="category" data-category="Gaya">Gaya</button></div><label class="search">⌕<input id="searchInput" type="search" placeholder="Cari produk..." aria-label="Cari produk"></label></section>
+		<section class="product-grid" id="productGrid" aria-live="polite"></section>
+	</main>
+
+	<script>
+		const products = [
+			{ name: 'Cangkir Keramik Senja', category: 'Rumah', price: 'Rp129.000', unit: 'handmade', rating: '4.9', tag: 'Favorit', image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=700&q=80' },
+			{ name: 'Kopi Arabika Lereng', category: 'Rasa', price: 'Rp89.000', unit: '250 gram', rating: '4.8', tag: 'Baru', image: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=700&q=80' },
+			{ name: 'Lilin Aromaterapi Kayu', category: 'Rumah', price: 'Rp75.000', unit: 'soy wax • 120 ml', rating: '4.7', tag: '', image: 'https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=700&q=80' },
+			{ name: 'Totebag Kanvas Harian', category: 'Gaya', price: 'Rp149.000', unit: 'cotton canvas', rating: '4.9', tag: 'Terlaris', image: 'https://images.unsplash.com/photo-1594223274512-ad4803739b7c?auto=format&fit=crop&w=700&q=80' },
+			{ name: 'Teh Melati Pagi', category: 'Rasa', price: 'Rp59.000', unit: '20 tea bags', rating: '4.8', tag: '', image: 'https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?auto=format&fit=crop&w=700&q=80' },
+			{ name: 'Vas Keramik Organik', category: 'Rumah', price: 'Rp179.000', unit: 'ukuran medium', rating: '4.6', tag: 'Baru', image: 'https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?auto=format&fit=crop&w=700&q=80' },
+			{ name: 'Dompet Kulit Minimal', category: 'Gaya', price: 'Rp219.000', unit: 'kulit pull-up', rating: '4.9', tag: '', image: 'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=700&q=80' },
+			{ name: 'Madu Hutan Murni', category: 'Rasa', price: 'Rp99.000', unit: '250 ml', rating: '4.8', tag: 'Pilihan kami', image: 'https://images.unsplash.com/photo-1471943311424-646960669fbc?auto=format&fit=crop&w=700&q=80' }
+		];
+		const grid = document.querySelector('#productGrid');
+		const searchInput = document.querySelector('#searchInput');
+		let activeCategory = 'Semua';
+		let cartTotal = 0;
+
+		function renderProducts() {
+			const query = searchInput.value.toLowerCase().trim();
+			const visible = products.filter(product => (activeCategory === 'Semua' || product.category === activeCategory) && product.name.toLowerCase().includes(query));
+			grid.innerHTML = visible.length ? visible.map((product, index) => `
+				<article class="product-card">
+					<div class="product-image"><img src="${product.image}" alt="${product.name}" loading="lazy">${product.tag ? `<span class="tag">${product.tag}</span>` : ''}<button class="heart" aria-label="Simpan ${product.name}">♡</button></div>
+					<div class="product-info"><div class="product-meta"><span>${product.category}</span><span class="rating">★ ${product.rating}</span></div><h2>${product.name}</h2><div class="bottom-row"><div class="price">${product.price}<small>${product.unit}</small></div><button class="add-button" data-add="${index}" aria-label="Tambahkan ${product.name} ke keranjang">+</button></div></div>
+				</article>`).join('') : '<p class="empty">Produk yang kamu cari belum ditemukan.</p>';
+			grid.querySelectorAll('[data-add]').forEach(button => button.addEventListener('click', () => { cartTotal += 1; document.querySelector('#cartCount').textContent = cartTotal; button.textContent = '✓'; setTimeout(() => button.textContent = '+', 900); }));
+		}
+		document.querySelectorAll('.category').forEach(button => button.addEventListener('click', () => { document.querySelector('.category.active').classList.remove('active'); button.classList.add('active'); activeCategory = button.dataset.category; renderProducts(); }));
+		searchInput.addEventListener('input', renderProducts);
+		renderProducts();
+	</script>
+</body>
+</html>
